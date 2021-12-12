@@ -148,5 +148,3 @@ def get_route(hostname):
 	# print("Tracelist2: ",tracelist2)
 	return tracelist2
 
-if _name_ == '_main_':
-	print(get_route("google.co.in"))
