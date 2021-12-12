@@ -81,7 +81,7 @@ def get_route(hostname):
 				whatReady = select.select([mySocket], [], [], timeLeft)
 				howLongInSelect = (time.time() - startedSelect)
 				if whatReady[0] == []: # Timeout
-					tracelist1 = [ttl, '*', "Request timed out."]
+					tracelist1 = [str(ttl), '*', "Request timed out"]
 					#Fill in start
 					#You should add the list above to your all traces list
 					tracelist2.append(tracelist1)
@@ -90,7 +90,7 @@ def get_route(hostname):
 				timeReceived = time.time()
 				timeLeft = timeLeft - howLongInSelect
 				if timeLeft <= 0:
-					tracelist1 = [ttl, '*', "Request timed out."]
+					tracelist1 = [str(ttl), '*', "Request timed out"]
 					#Fill in start
 					#You should add the list above to your all traces list
 					tracelist2.append(tracelist1)
@@ -114,7 +114,7 @@ def get_route(hostname):
 					#Fill in end
 				if types == 11:
 					bytes = struct.calcsize("d")
-					timeSent = struct.unpack("d", recvPacket[28:28 + bytes])
+					timeSent = struct.unpack("d", recvPacket[28:28 + bytes])[0]
 					#Fill in start
 					#You should add your responses to your lists here
 					tracelist1 = [str(ttl), "{}ms".format(int((timeReceived-t)*1000)), destAddr, host]
@@ -122,7 +122,7 @@ def get_route(hostname):
 					#Fill in end
 				elif types == 3:
 					bytes = struct.calcsize("d")
-					timeSent = struct.unpack("d", recvPacket[28:28 + bytes])
+					timeSent = struct.unpack("d", recvPacket[28:28 + bytes])[0]
 					#Fill in start
 					#You should add your responses to your lists here
 					tracelist1 = [str(ttl), "{}ms".format(int((timeReceived-t)*1000)), destAddr, host]
@@ -130,7 +130,7 @@ def get_route(hostname):
 					#Fill in end
 				elif types == 0:
 					bytes = struct.calcsize("d")
-					timeSent = struct.unpack("d", recvPacket[28:28 + bytes])
+					timeSent = struct.unpack("d", recvPacket[28:28 + bytes])[0]
 					#Fill in start
 					#You should add your responses to your lists here and return your list if your destination IP is met
 					tracelist1 = [str(ttl), "{}ms".format(int((timeReceived- timeSent)*1000)), destAddr, host]
@@ -139,7 +139,7 @@ def get_route(hostname):
 				else:
 					#Fill in start
 					#If there is an exception/error to your if statements, you should append that to your list here
-					tracelist1 = [ttl, '*', "Error"]
+					tracelist1 = [str(ttl), '*', "Error"]
 					tracelist2.append(tracelist1)
 					#Fill in end
 				break
@@ -147,3 +147,6 @@ def get_route(hostname):
 				mySocket.close()
 	# print("Tracelist2: ",tracelist2)
 	return tracelist2
+
+if _name_ == '_main_':
+	print(get_route("google.co.in"))
