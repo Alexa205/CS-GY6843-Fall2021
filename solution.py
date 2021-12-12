@@ -151,7 +151,3 @@ def get_route(hostname):
                 mySocket.close()
     # print("Tracelist2: ",tracelist2)
     return tracelist2
-
-
-if __name__ == '__main__':
-    get_route("google.co.in")
