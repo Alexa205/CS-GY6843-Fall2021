@@ -1,3 +1,4 @@
+# coding=utf-8
 from socket import *
 import os
 import sys
@@ -54,6 +55,7 @@ def build_packet():
         myChecksum = htons(myChecksum)
 
     header = struct.pack("bbHHh", ICMP_ECHO_REQUEST, 0, myChecksum, myId, 1)
+    # Don’t send the packet yet , just return the final packet in this function.
     # Fill in end
     # So the function ending should look like this
     packet = header + data
@@ -104,7 +106,7 @@ def get_route(hostname):
                 # Fill in start
                 # Fetch the icmp type from the IP packet
                 icmpHeader = recvPacket[20:28]
-                request_type, code, checksum, packetID, sequence = struct.unpack("bbHHh", icmpHeader)
+                types, code, checksum, packetID, sequence = struct.unpack("bbHHh", icmpHeader)
 
                 # Fill in end
                 try:  # try to fetch the hostname
